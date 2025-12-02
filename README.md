@@ -97,7 +97,7 @@ settings:
   allow_sudo: false
   review_commands_before_executing: true
   review_command_output_before_sending: true
-  command_max_output_size: 20_000
+  command_max_output_size: 20000
 ```
 
 **Settings Explained:**
@@ -153,4 +153,5 @@ See the licence: [https://creativecommons.org/licenses/by-nc-sa/4.0/](https://cr
 
 We'd love your feedback during the beta.
 Email **[columbo@anomify.ai](mailto:columbo@anomify.ai)** with comments, questions or ideas.
+
 
