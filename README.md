@@ -51,7 +51,7 @@ Your diagnostic data is **your property** and you remain in control.
 ## Getting Started
 
 Agent Columbo is currently in **private beta**.
-To request an API token, email **[columbo@anomify.ai](mailto:columbo@anomify.ai)**.
+To request an API token, email contact us via [the contact form on our website](https://anomify.ai/contact).
 
 ### Installation
 
@@ -153,5 +153,3 @@ See the licence: [https://creativecommons.org/licenses/by-nc-sa/4.0/](https://cr
 
 We'd love your feedback during the beta.
 Email **[columbo@anomify.ai](mailto:columbo@anomify.ai)** with comments, questions or ideas.
-
-
