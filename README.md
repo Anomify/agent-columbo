@@ -56,7 +56,7 @@ To request an API token, email **[columbo@anomify.ai](mailto:columbo@anomify.ai)
 ### Installation
 
 ```bash
-git clone https://github.com/anomify/agent-columbo.git
+git clone https://github.com/Anomify/agent-columbo.git
 cd agent-columbo
 pip install .
 ```
@@ -153,3 +153,4 @@ See the licence: [https://creativecommons.org/licenses/by-nc-sa/4.0/](https://cr
 
 We'd love your feedback during the beta.
 Email **[columbo@anomify.ai](mailto:columbo@anomify.ai)** with comments, questions or ideas.
+
