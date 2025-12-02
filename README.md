@@ -1,7 +1,8 @@
 # Agent Columbo
 
 **Agent Columbo** is Anomify's open-source, interactive debugging detective.
-It runs on your machine, investigates problems by issuing local diagnostic commands, and securely shares only the information **you approve** with our server to help analyse and solve issues.
+
+It runs on your machine, allows you to submit queries in natural language, and investigates them by issuing local diagnostic commands, and securely shares only the information **you approve** with our server to help analyse and solve issues.
 
 Columbo does **not** make any changes to your system - it just performs read-only inspection commands that you explicitly allow.
 
@@ -17,7 +18,9 @@ Modern systems are complex. Diagnosing failures, configuration issues, and subtl
 * The client always asks you before sending any output.
 * You stay fully in control.
 
-We built Columbo because we wanted a debugging assistant that was powerful but also **transparent, predictable, and respectful of user privacy**. We at Anomify use it all the time.
+We built Columbo because we wanted a debugging assistant that was powerful but also **transparent, predictable, and respectful of user privacy**.
+
+We at Anomify use it all the time.
 
 ---
 
@@ -40,7 +43,7 @@ Columbo stores a conversation transcript on the server **only for the duration o
 
 * Sessions automatically expire and are deleted after **24 hours of inactivity**.
 * You can manually delete a conversation at any time using
-  ` /delete {conversation_id}`
+  `/delete {conversation_id}`
   *(this feature is currently being finalised)*.
 * Data is **never** shared, aggregated, analysed, or used for any purpose outside your investigation.
 
@@ -51,7 +54,8 @@ Your diagnostic data is **your property** and you remain in control.
 ## Getting Started
 
 Agent Columbo is currently in **private beta**.
-To request an API token, email contact us via [the contact form on our website](https://anomify.ai/contact).
+
+To request an API token, email **[columbo@anomify.ai](mailto:columbo@anomify.ai)**.
 
 ### Installation
 
@@ -122,7 +126,7 @@ Columbo excels when the root cause isn't obvious, or if you're not an experience
 * "Is my system low on disk space?"
 * "Are there any glaring security misconfigurations?"
 * "What's preventing this service from starting?"
-* Can you have a look at my new app in /home/danziger/apps/frank and tell me if there are any issues?
+* "Can you have a look at my new app in /home/danziger/apps/frank and tell me if there are any issues?"
 
 Because Columbo can execute on your local machine - with your supervision - it can provide far more accurate diagnostics than remote-only tools.
 

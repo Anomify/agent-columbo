@@ -6,4 +6,3 @@ settings:
   review_commands_before_executing: true
   review_command_output_before_sending: true
   command_max_output_size: 20000
-
