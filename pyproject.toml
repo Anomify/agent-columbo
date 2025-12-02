@@ -27,7 +27,7 @@ dependencies = [
 [project.urls]
 
 Homepage = "https://anomify.ai/"
-Repository = "https://github.com/anomify/agent-columbo"
+Repository = "https://github.com/Anomify/agent-columbo"
 
 
 # ---------------------------
@@ -49,3 +49,4 @@ include = ["columbo*"]
 [tool.setuptools.package-data]
 
 columbo = []
+
