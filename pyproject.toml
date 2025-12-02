@@ -1,0 +1,51 @@
+[build-system]
+
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+
+name = "columbo"
+version = "0.0.1"
+description = "The local client for Anomify's Columbo AI Agent"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "CC-BY-SA-4.0"
+
+authors = [
+	{ name = "Simon Holliday", email = "si@anomify.ai" }
+]
+
+dependencies = [
+	"click",
+	"colorama",
+	"pydantic>=2",
+	"requests",
+	"pyyaml",
+]
+
+[project.urls]
+
+Homepage = "https://anomify.ai/"
+Repository = "https://github.com/anomify/agent-columbo"
+
+
+# ---------------------------
+# Setuptools Configuration
+# ---------------------------
+
+# Point setuptools at the src directory
+[tool.setuptools]
+
+package-dir = {"" = "src"}
+
+# Auto-discover packages under src/
+[tool.setuptools.packages.find]
+
+where = ["src"]
+include = ["columbo*"]
+
+# Optional: include static files, templates, etc.
+[tool.setuptools.package-data]
+
+columbo = []

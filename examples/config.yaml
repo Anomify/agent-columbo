@@ -1,0 +1,8 @@
+server_base_url: https://columbo.anomify.ai/api/v1
+api_token: YOUR_ANOMIFY_API_TOKEN_GOES_HERE
+
+settings:
+  allow_sudo: false
+  review_commands_before_executing: true
+  review_command_output_before_sending: true
+  command_max_output_size: 20_000
