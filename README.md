@@ -2,7 +2,7 @@
 
 **Agent Columbo** is Anomify's open-source, interactive debugging detective.
 
-It runs on your machine, allows you to submit queries in natural language, and investigates them by issuing local diagnostic commands, and securely shares only the information **you approve** with our server to help analyse and solve issues.
+It runs on your machine, allows you to submit queries in natural language, and investigates them by issuing local diagnostic commands, securely sharing only the information **you approve** with our server to help analyse and solve issues.
 
 Columbo does **not** make any changes to your system - it just performs read-only inspection commands that you explicitly allow.
 
@@ -158,3 +158,4 @@ See the licence: [https://creativecommons.org/licenses/by-nc-sa/4.0/](https://cr
 
 We'd love your feedback during the beta.
 Please contact us via [the contact form on our website](https://anomify.ai/contact) with comments, questions or ideas.
+
