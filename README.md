@@ -152,4 +152,4 @@ See the licence: [https://creativecommons.org/licenses/by-nc-sa/4.0/](https://cr
 ## Feedback
 
 We'd love your feedback during the beta.
-Email **[columbo@anomify.ai](mailto:columbo@anomify.ai)** with comments, questions or ideas.
+Please contact us via [the contact form on our website](https://anomify.ai/contact) with comments, questions or ideas.
