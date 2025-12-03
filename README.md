@@ -42,9 +42,7 @@ You're encouraged to read the client code (this repository) before using it. The
 Columbo stores a conversation transcript on the server **only for the duration of the investigation** so that it can provide coherent guidance.
 
 * Sessions automatically expire and are deleted after **24 hours of inactivity**.
-* You can manually delete a conversation at any time using
-  `/delete {conversation_id}`
-  *(this feature is currently being finalised)*.
+* You can manually delete a conversation from our server at any time using `/delete {conversation_id}`.
 * Data is **never** shared, aggregated, analysed, or used for any purpose outside your investigation.
 
 Your diagnostic data is **your property** and you remain in control.
@@ -158,4 +156,5 @@ See the licence: [https://creativecommons.org/licenses/by-nc-sa/4.0/](https://cr
 
 We'd love your feedback during the beta.
 Please contact us via [the contact form on our website](https://anomify.ai/contact) with comments, questions or ideas.
+
 
