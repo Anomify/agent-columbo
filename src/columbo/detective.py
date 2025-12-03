@@ -229,6 +229,58 @@ class Detective:
 
 		return str(self.config.server_base_url).rstrip('/') + '/' + method.strip('/')
 
+	def _run_slash_command (self, command:list[str]):
+
+		"""
+		Execute a remote API call.
+		"""
+
+		valid_commands = ['delete']
+
+		if command[0] not in valid_commands:
+
+			print(colorama_colour_explanation + '"%s" is not a valid command.' % (command[0]))
+			return False
+
+		command_api_url = self._get_server_url(requests.utils.quote(command[0]))
+
+		if len(command) > 1:
+			command_api_url += '/' + '/'.join([requests.utils.quote(c) for c in command[1:]])
+
+		print(colorama_colour_explanation + "Attempting to execute remote API call:")
+
+		print(colorama_colour_command + command_api_url)
+
+		headers = {
+			'Authorization': 'Bearer %s' % (self.config.api_token)
+		}
+
+		http_response = requests.post(command_api_url, headers=headers)
+
+		if 200 <= http_response.status_code < 300:
+
+			print(colorama_colour_explanation + "Remote API call executed successfully :)")
+
+			if command[0] == 'delete' and len(command) > 1 and command[1] == self.current_conversation_id:
+				# We have deleted the current conversation. So reset the local id.
+				self.current_conversation_id = None
+
+			return True
+
+		if 400 <= http_response.status_code < 500:
+
+			print(colorama_colour_explanation + "Remote API reported a client error (%d)" % (http_response.status_code))
+			return False
+
+		if 500 <= http_response.status_code < 600:
+
+			print(colorama_colour_explanation + "Remote API reported a server error (%d)" % (http_response.status_code))
+			return False
+
+		print(colorama_colour_explanation + "Remote API call failed with error code %d" % (http_response.status_code))
+
+		return False
+
 	def investigate (self, issue:str):
 
 		"""
@@ -263,6 +315,11 @@ class Detective:
 			http_response_dict = json.loads(http_response.json())
 
 			columbo_response = columbo.models.ColumboResponse(**http_response_dict)
+
+			if self.current_conversation_id is None:
+
+				print(colorama_colour_output + "The id for this conversation is %s." % (columbo_response.conversation_id))
+				print(colorama_colour_output + "You may delete this conversation from our server at any time by entering the following at the issue prompt: /delete %s" % (columbo_response.conversation_id))
 
 			self.current_conversation_id = columbo_response.conversation_id
 
@@ -364,18 +421,11 @@ class Detective:
 
 			issue = input(colorama_colour_prompt + 'Issue: ').strip()
 
-			slash_commands_available = ['recall']
-
 			if len(issue):
 
 				if issue[0] == '/':
 
-					command = issue[1:].split()
+					self._run_slash_command(issue[1:].split())
+					continue
 
-					if issue[1:] in slash_commands_available:
-						print(colorama_colour_output + "Valid command noted but this functionality is not yet implemented.\n")
-					else:
-						print(colorama_colour_output + "Invalid command.\n")
-
-				else:
-					self.investigate(issue)
+				self.investigate(issue)
