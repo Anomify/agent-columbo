@@ -308,7 +308,13 @@ class Detective:
 			# Validate
 			payload_dict = columbo.models.ColumboRequest(**payload_dict).model_dump()
 
-			http_response = requests.post(self._get_server_url('investigate'), json=payload_dict, headers=headers, stream=False)
+			http_response = requests.post(
+				self._get_server_url('investigate'),
+				json = payload_dict,
+				headers = headers,
+				stream = False,
+				timeout = (5, 30)
+			)
 
 			http_response.raise_for_status()
 
@@ -323,9 +329,19 @@ class Detective:
 
 			self.current_conversation_id = columbo_response.conversation_id
 
+		except requests.exceptions.ConnectionError:
+
+			print(colorama_colour_output + "Cannot connect to the remote service. Exiting.")
+			sys.exit(1)
+
+		except requests.exceptions.HTTPError as e:
+
+			print(colorama_colour_output + "The remote service reported an error. Exiting. (\"%s\")" % (e))
+			sys.exit(1)
+
 		except Exception as e:
 
-			logger.error("Something went wrong setting up the conversation. We'll stop here for now.")
+			print(colorama_colour_output + "Something went wrong setting up the conversation. We'll stop here for now.")
 			sys.exit(1)
 
 		try:
