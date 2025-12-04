@@ -189,7 +189,6 @@ class Detective:
 		commands = [
 			['cat','/etc/os-release'],
 			['uname','-a'],
-			['id'],
 		]
 
 		env_command_outputs = {}
