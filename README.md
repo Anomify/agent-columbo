@@ -65,7 +65,7 @@ pip install .
 
 ### Basic Usage
 
-The simplest example (also in `examples/demo.py`):
+The simplest example (also in `examples/main.py`):
 
 ```python
 from columbo.detective import Detective

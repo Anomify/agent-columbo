@@ -5,6 +5,7 @@ import json
 import logging
 import pydantic
 import requests
+import platform
 import subprocess
 import sys
 
@@ -186,10 +187,16 @@ class Detective:
 		Run some local commands to provide background information on the server.
 		"""
 
-		commands = [
-			['cat','/etc/os-release'],
-			['uname','-a'],
-		]
+		if platform.system() == 'Windows':
+			commands = [
+				['cmd', '/c', 'ver'],
+				['hostname'],
+			]
+		else:
+			commands = [
+				['cat','/etc/os-release'],
+				['uname','-a'],
+			]
 
 		env_command_outputs = {}
 
