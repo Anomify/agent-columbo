@@ -8,6 +8,22 @@ class DetectiveSettings (pydantic.BaseModel):
 		description = "If enabled, allows the agent to suggest running commands with sudo privileges."
 	)
 
+	forbid_system_changes: bool = pydantic.Field (
+		default = True,
+		description = (
+			"If enabled, blocks commands that are likely to modify the system (files, packages, services, or users). "
+			"Disable only if you explicitly want to allow system changes."
+		)
+	)
+
+	allow_shell_wrappers: bool = pydantic.Field (
+		default = False,
+		description = (
+			"If enabled, allows shell wrapper commands such as `bash -c` or `cmd /c`, which can hide modifications. "
+			"Disabled by default for transparency."
+		)
+	)
+
 	review_commands_before_executing: bool = pydantic.Field (
 		default = True,
 		description = (

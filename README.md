@@ -98,6 +98,8 @@ api_token: YOUR_ANOMIFY_API_TOKEN_GOES_HERE
 
 settings:
   allow_sudo: false
+  forbid_system_changes: true
+  allow_shell_wrappers: false
   review_commands_before_executing: true
   review_command_output_before_sending: true
   command_max_output_size: 20000
@@ -107,6 +109,10 @@ settings:
 
 * `allow_sudo`:
   Whether Columbo may run `sudo` commands. Default `false`.
+* `forbid_system_changes`:
+  Blocks commands that are likely to modify the system (files, packages, services, or users). Default `true`.
+* `allow_shell_wrappers`:
+  Allows shell wrapper commands such as `bash -c` or `cmd /c`, which can hide modifications. Default `false`.
 * `review_commands_before_executing`:
   Shows each command for approval before running.
 * `review_command_output_before_sending`:

@@ -48,6 +48,26 @@ class Detective:
 	passing them back for analysis, and receiving instructions and conclusions.
 	"""
 
+	PRIVILEGE_COMMANDS = {'sudo', 'doas', 'pkexec', 'su', 'runas'}
+
+	SHELL_WRAPPERS = {
+		'bash', 'sh', 'zsh', 'dash', 'ksh', 'fish',
+		'cmd', 'powershell', 'pwsh'
+	}
+
+	SYSTEM_CHANGE_COMMANDS = {
+		'rm', 'mv', 'cp', 'dd', 'chmod', 'chown', 'chgrp', 'ln',
+		'touch', 'truncate', 'mkdir', 'rmdir',
+		'mkfs', 'mkswap', 'mount', 'umount', 'fsck',
+		'useradd', 'userdel', 'usermod', 'groupadd', 'groupdel', 'groupmod',
+		'passwd', 'chpasswd', 'visudo', 'adduser', 'deluser',
+		'service', 'systemctl',
+		'reboot', 'shutdown', 'poweroff', 'halt', 'init',
+		'apt', 'apt-get', 'dnf', 'yum', 'pacman', 'zypper', 'apk',
+		'brew', 'snap', 'flatpak', 'rpm', 'dpkg',
+		'tee'
+	}
+
 	def __init__ (self, config:dict={}):
 
 		"""
@@ -72,6 +92,78 @@ class Detective:
 		dt_local = datetime.datetime.now().astimezone()
 
 		return dt_local.isoformat()
+
+	def _normalize_command_token (self, token:str) -> str:
+
+		"""
+		Normalize a command token for safe comparisons across platforms.
+		"""
+
+		return token.split('/')[-1].split('\\')[-1].lower()
+
+	def _get_primary_command_token (self, command:list[str]) -> str | None:
+
+		"""
+		Return the token representing the executable, handling simple env wrappers.
+		"""
+
+		if not command:
+			return None
+
+		primary_token = command[0]
+		primary_name = self._normalize_command_token(primary_token)
+
+		if primary_name != 'env':
+			return primary_token
+
+		for token in command[1:]:
+
+			if token.startswith('-'):
+				continue
+
+			if '=' in token:
+				continue
+
+			return token
+
+		return None
+
+	def _get_command_block_reason (self, command:list[str]) -> str | None:
+
+		"""
+		Return a human-readable reason to block a command, or None if allowed.
+		"""
+
+		primary_token = self._get_primary_command_token(command)
+
+		if primary_token is None:
+			return 'No command was provided.'
+
+		primary_name = self._normalize_command_token(primary_token)
+
+		if primary_name == 'sudo' and not self.config.settings.allow_sudo:
+			return 'You are not permitted to use `sudo`.'
+
+		if primary_name in self.PRIVILEGE_COMMANDS and primary_name != 'sudo':
+			return 'Privilege escalation commands are not permitted.'
+
+		if not self.config.settings.allow_shell_wrappers and primary_name in self.SHELL_WRAPPERS:
+
+			return (
+				'Shell wrapper commands (for example, `bash -c` or `cmd /c`) are disabled by default. '
+				'Enable `allow_shell_wrappers` to allow them.'
+			)
+
+		if self.config.settings.forbid_system_changes:
+
+			if primary_name in self.SYSTEM_CHANGE_COMMANDS:
+
+				return (
+					'The command "%s" can modify the system and is blocked by `forbid_system_changes`.'
+					% (primary_name)
+				)
+
+		return None
 
 	def _run_local_command (self, command:list[str]) -> tuple[str, str, int]:
 
@@ -136,12 +228,13 @@ class Detective:
 
 		comment = None
 
-		# Check for sudo
+		block_reason = self._get_command_block_reason(command)
 
-		if not self.config.settings.allow_sudo and command[0] == 'sudo':
+		if block_reason:
 
-			logger.error('Model attempted sudo.')
-			return None, None, 1, 'You are not permitted to use `sudo`.'
+			logger.error('Command blocked: %s' % (' '.join(command)))
+			print(colorama_colour_explanation + block_reason)
+			return None, None, 1, block_reason
 
 		if not self.config.settings.review_commands_before_executing:
 

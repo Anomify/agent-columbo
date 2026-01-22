@@ -3,6 +3,8 @@ api_token: YOUR_ANOMIFY_API_TOKEN_GOES_HERE
 
 settings:
   allow_sudo: false
+  forbid_system_changes: true
+  allow_shell_wrappers: false
   review_commands_before_executing: true
   review_command_output_before_sending: true
   command_max_output_size: 20000
